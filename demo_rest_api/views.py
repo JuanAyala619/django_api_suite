@@ -30,7 +30,12 @@ class DemoRestApi(APIView):
         data_list.append(data)
         return Response({'message': 'Dato guardado exitosamente.', 'data': data}, status=status.HTTP_201_CREATED)
 
-class DemoRestApiItem(APIView):    
+class DemoRestApiItem(APIView):  
+    def get(self,request,id):
+        for item in data_list:
+            if item['id']==id:
+                return Response({'message': 'Dato extraído exitosamente','data':item}, status=status.HTTP_200_OK)    
+        return Response({'error':f'No existe el id {id}' }, status=status.HTTP_400_BAD_REQUEST)
     def put(self,request,id):
         data=request.data
         required_fields = ['name', 'email', 'is_active']
